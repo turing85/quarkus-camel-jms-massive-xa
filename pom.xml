@@ -31,7 +31,6 @@
 
         <!-- Quarkiverse versions -->
         <quarkus-artemis-jms.version>3.2.1</quarkus-artemis-jms.version>
-        <quarkus-pooled-jms.version>2.3.1</quarkus-pooled-jms.version>
 
         <!-- Project setup -->
         <assembly-plugin.skip>false</assembly-plugin.skip>
@@ -339,11 +338,6 @@
         <dependency>
             <groupId>io.quarkiverse.artemis</groupId>
             <artifactId>quarkus-artemis-jms</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.messaginghub</groupId>
-            <artifactId>quarkus-pooled-jms</artifactId>
-            <version>${quarkus-pooled-jms.version}</version>
         </dependency>
     </dependencies>
 

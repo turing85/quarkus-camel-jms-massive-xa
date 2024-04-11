@@ -3,9 +3,9 @@ package de.turing85.quarkus.camel.massive.xa;
 import java.time.Duration;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.jms.ConnectionFactory;
 
 import io.smallrye.common.annotation.Identifier;
+import org.apache.activemq.artemis.jms.client.ActiveMQXAConnectionFactory;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -17,11 +17,11 @@ public class MassiveRoute extends RouteBuilder {
   public static final String PROPERTY_COUNT = "count";
   public static final String PROPERTY_LOOP_COUNT = "loopCount";
 
-  private final ConnectionFactory connectionFactory;
+  private final ActiveMQXAConnectionFactory connectionFactory;
   private final PlatformTransactionManager globalTransactionManager;
 
   public MassiveRoute(
-      @SuppressWarnings("CdiInjectionPointsInspection") ConnectionFactory connectionFactory,
+      @SuppressWarnings("CdiInjectionPointsInspection") ActiveMQXAConnectionFactory connectionFactory,
       @Identifier(TransactionManagerConfig.GLOBAL_PLATFORM_TRANSACTION_MANAGER_NAME) PlatformTransactionManager globalTransactionManager) {
     this.connectionFactory = connectionFactory;
     this.globalTransactionManager = globalTransactionManager;

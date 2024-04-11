@@ -1,0 +1,59 @@
+= quarkus-camel-jms-massive-xa
+
+== Problem description
+
+This project shows a problem with XA transactions when using `quarkus-artemis-jms`, `quarkus-pooled-jms`, `camel-quarkus-jms` and `camel-quarkus-jta`.
+
+The application sends 1000 messages within an XA-transactions to a JMS queue. Unfortunately, the application gets "stuck" when it sends the 501st message. The transaction is eventually rolled back by the transaction reaper (i.e. when the transaction times out).
+
+== Resolved
+
+The issue is not an issue, but a config error. If we set the property `quarkus.pooled-jms.max-sessions-per-connection` to another value (or to `-1` for "unlimited"), the behaviour changes accordingly. See branch `resolved`.
+
+== Equivalent Implementation only with `quarkus-artemis-jms` and `quarkus-narayana-jta`, without camel
+
+On branch `only-quarkus-artemis`, we find an equivalent implementation with only `quarkus-artemis-jms` and `quarkus-narayana-jta`. This implementation is able to send the 1000 messages to artemis.
+
+== Removing `quarkus-pooled-jms` from the camel-based reproducer
+
+on branch `without-quarkus-pooled-jms`, we find the same implementation as on branch `main`, but it also uses `quarkus-pooled-jms`. This implementation is able to send the 1000 messages to artemis.
+
+== A `camel-sql`-based reproducer
+
+To find out whether the problem is related to `camel-quarkus-jta`, a reproducer that writes 1000 entries to a database has been implemented on branch `write-to-database`. This implementation is able to insert the 1000 entries into the database.
+
+== Running the reproducer
+
+We can run the reproducer by executing
+
+.Execute the reproducer
+[source,bash]
+----
+./mvnw clean quarkus:dev
+----
+
+NOTE: to run the reproducer, `docker` or a docker-compatible container runtime that is supported (e.g. `podman`) is required.
+
+== Contributors ✨
+
+Thanks goes to these wonderful people (https://allcontributors.org/docs/en/emoji-key[emoji key]):
+
+++++
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://turing85.github.io"><img src="https://avatars.githubusercontent.com/u/32584495?v=4?s=100" width="100px;" alt="Marco Bungart"/><br /><sub><b>Marco Bungart</b></sub></a><br /><a href="#code-turing85" title="Code">💻</a> <a href="#maintenance-turing85" title="Maintenance">🚧</a> <a href="#doc-turing85" title="Documentation">📖</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+++++
+
+This project follows the https://github.com/all-contributors/all-contributors[all-contributors] specification. Contributions of any kind welcome!

@@ -26,12 +26,8 @@
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.8.3</quarkus.platform.version>
 
-        <!-- Camel Quarkus versions -->
-        <quarkus-camel-platform.artifact-id>quarkus-camel-bom</quarkus-camel-platform.artifact-id>
-
         <!-- Quarkiverse versions -->
         <quarkus-artemis-jms.version>3.2.1</quarkus-artemis-jms.version>
-        <quarkus-pooled-jms.version>2.3.1</quarkus-pooled-jms.version>
 
         <!-- Project setup -->
         <assembly-plugin.skip>false</assembly-plugin.skip>
@@ -269,13 +265,6 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>${quarkus.platform.group-id}</groupId>
-                <artifactId>${quarkus-camel-platform.artifact-id}</artifactId>
-                <version>${quarkus.platform.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
                 <groupId>io.quarkiverse.artemis</groupId>
                 <artifactId>quarkus-artemis-bom</artifactId>
                 <version>${quarkus-artemis-jms.version}</version>
@@ -320,30 +309,15 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-config-yaml</artifactId>
         </dependency>
-
-        <!-- Camel Quarkus dependencies -->
         <dependency>
-            <groupId>org.apache.camel.quarkus</groupId>
-            <artifactId>camel-quarkus-scheduler</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.camel.quarkus</groupId>
-            <artifactId>camel-quarkus-jms</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.camel.quarkus</groupId>
-            <artifactId>camel-quarkus-jta</artifactId>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-narayana-jta</artifactId>
         </dependency>
 
         <!-- Quarkiverse dependencies -->
         <dependency>
             <groupId>io.quarkiverse.artemis</groupId>
             <artifactId>quarkus-artemis-jms</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.messaginghub</groupId>
-            <artifactId>quarkus-pooled-jms</artifactId>
-            <version>${quarkus-pooled-jms.version}</version>
         </dependency>
     </dependencies>
 
